@@ -17,31 +17,32 @@ class Creature:
 
     def __str__(self):
         return f"{self.name} (HP: {self.hp})"
-
+    
 # ===============================
-# FlyingCreature Branch
+# SwimmingCreature Branch
 # ===============================
 
-class FlyingCreature(Creature):
+class SwimmingCreature(Creature):
     def __init__(self, name, hp, attack_power):
         super().__init__(name, hp, attack_power)
-        self.altitude = 0
+        self.depth = 0
 
+    def dive_to(self, new_depth):
+        self.depth = new_depth
+        print(f"{self.name} dives to depth {new_depth} meters.")
 
-    def fly_to(self, new_altitude):
-        self.altitude = new_altitude    
-        print(f"Sky Hawk flies to altitude {new_altitude} meters.")    
-
-    def attack(self, target):        
-        print(f"Sky Hawk swoops down from altitude {self.altitude}!")
+    def attack(self, target):
         if not self.is_alive():
             print(f"{self.name} cannot attack because it is defeated.")
             return
-
-        print(f"{self.name} performs an aerial attack on {target.name} for {self.attack_power} damage!")
+            
+        print(f"Aqua Serpent attacks from underwater at depth {self.depth}!")
+        print(f"{self.name} attacks {target.name} for {self.attack_power} damage!")
         target.hp -= self.attack_power
-        # Show target health        
-        print(f"{target.name} HP is now {target.hp}")# ===============================
+        print(f"{target.name} HP is now {target.hp}")
+
+
+# ===============================
 # FlyingCreature Branch
 # ===============================
 
@@ -130,3 +131,16 @@ if __name__ == "__main__":
     print()
     print("=== Tests Completed ===")
     print()
+
+
+    # Test 8: Swimming Creature
+    print("=== SwimmingCreature Tests ===\n")
+    serpent = SwimmingCreature("Aqua Serpent", 60, 7)
+    serpent.dive_to(30)
+    print(f"Depth should be 30 → Actual: {serpent.depth}")
+
+    dummy = Creature("Practice Dummy", 40, 0)
+    serpent.attack(dummy)
+    print(f"Dummy HP should be 33 → Actual: {dummy.hp}")
+    print()
+    print("=== Tests Completed ===")
