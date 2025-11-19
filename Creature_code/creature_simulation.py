@@ -36,7 +36,7 @@ class SwimmingCreature(Creature):
             print(f"{self.name} cannot attack because it is defeated.")
             return
             
-        print(f"Aqua Serpent attacks from underwater at depth {self.depth}!")
+        print(f"{self.name} attacks from underwater at depth {self.depth}!")
         print(f"{self.name} attacks {target.name} for {self.attack_power} damage!")
         target.hp -= self.attack_power
         print(f"{target.name} HP is now {target.hp}")
@@ -54,10 +54,10 @@ class FlyingCreature(Creature):
 
     def fly_to(self, new_altitude):
         self.altitude = new_altitude    
-        print(f"Sky Hawk flies to altitude {new_altitude} meters.")    
+        print(f"{self.name} flies to altitude {new_altitude} meters.")    
 
     def attack(self, target):        
-        print(f"Sky Hawk swoops down from altitude {self.altitude}!")
+        print(f"{self.name} swoops down from altitude {self.altitude}!")
         if not self.is_alive():
             print(f"{self.name} cannot attack because it is defeated.")
             return
@@ -65,6 +65,30 @@ class FlyingCreature(Creature):
         print(f"{self.name} performs an aerial attack on {target.name} for {self.attack_power} damage!")
         target.hp -= self.attack_power
         # Show target health        
+        print(f"{target.name} HP is now {target.hp}")
+
+
+# ===============================
+# fire_creature Branch
+# ===============================
+
+class FireCreature(Creature):
+    def __init__(self, name, hp, attack_power):
+        super().__init__(name, hp, attack_power)
+        self.fire_level = 30
+
+    def emit_fire(self, new_fire_level):
+        self.fire_level = new_fire_level
+        print(f"{self.name} emit fire level {new_fire_level}.")
+
+    def attack(self, target):
+        if not self.is_alive():
+            print(f"{self.name} cannot attack because it is defeated.")
+            return
+            
+        print(f"{self.name} attacks with emitting fire level {self.fire_level}!")
+        print(f"{self.name} attacks {target.name} for {self.attack_power} damage!")
+        target.hp -= self.attack_power
         print(f"{target.name} HP is now {target.hp}")
 
 if __name__ == "__main__":
@@ -142,5 +166,17 @@ if __name__ == "__main__":
     dummy = Creature("Practice Dummy", 40, 0)
     serpent.attack(dummy)
     print(f"Dummy HP should be 33 → Actual: {dummy.hp}")
+    print()
+    print("=== Tests Completed ===")
+
+    # Test 9: Fire Creature
+    print("=== Fire Tests ===\n")
+    flame_lord = FireCreature("Flame Lord", 60, 12)
+    flame_lord.emit_fire(50)
+    print(f"fire level should be 50 → Actual: {flame_lord.fire_level}")
+
+    dummy = Creature("Practice Dummy", 40, 0)
+    flame_lord.attack(dummy)
+    print(f"Dummy HP should be 28 → Actual: {dummy.hp}")
     print()
     print("=== Tests Completed ===")
